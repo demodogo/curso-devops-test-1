@@ -21,4 +21,14 @@ app.listen(PORT, () => {
     console.log(`Servidor ejecutándose en el puerto ${PORT}`);
 });
 
+if (process.env.CI) {
+    setTimeout(() => {
+        console.log('Apagando para que no se quede pegado en CI');
+        server.close(() => {
+            console.log('Servidor cerrado correctamente');
+            process.exit(0);
+        });
+    }, 10000);
+}
+
 module.exports = app;
