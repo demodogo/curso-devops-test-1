@@ -26,3 +26,12 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Log in to Docker Hub
+        run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+
+      - name: Build and push docker image
+        run: |
+          docker build -t demododev/dockerghtest:latest .
+          docker tag demododev/dockerghtest:latest demododev/dockerghtest-${{ GITHUB_SHA }}:latest
+          docker push demododev/dockerghtest-${{ GITHUB_SHA }}:latest
