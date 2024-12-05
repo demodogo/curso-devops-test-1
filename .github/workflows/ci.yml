@@ -33,5 +33,5 @@ jobs:
       - name: Build and push docker image
         run: |
           docker build -t demododev/dockerghtest:latest .
-          docker tag demododev/dockerghtest:latest demododev/dockerghtest-${{ GITHUB_SHA }}:latest
-          docker push demododev/dockerghtest-${{ GITHUB_SHA }}:latest
+          docker tag demododev/dockerghtest:latest demododev/dockerghtest-${{ github.sha }}:latest
+          docker push demododev/dockerghtest-${{ github.sha }}:latest
