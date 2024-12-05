@@ -4,7 +4,7 @@ const app = require('../../src/app');
 test('La ruta "/" responde con un mensaje', async () => {
     const response = await request(app).get('/');
     expect(response.statusCode).toBe(200);
-    expect(response.text).toBe('¡Hola, mundo desde Node.js!');
+    expect(response.text).toBe('¡Aquí en Node jej!');
 });
 
 test('La ruta "/api" responde con datos de la API externa', async () => {
