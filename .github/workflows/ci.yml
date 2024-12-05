@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,11 +26,18 @@ jobs:
       - name: Run tests
         run: npm test
 
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Log in to Docker Hub
         run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_TOKEN }}"
 
-      - name: Build and push docker image
-        run: |
-          docker build -t demododev/dockerghtest:latest .
-          docker tag demododev/dockerghtest:latest demododev/dockerghtest-${{ github.sha }}:latest
-          docker push demododev/dockerghtest-${{ github.sha }}:latest
+      - name: Build docker image
+        run: docker build -t demododev/dockerghtest:latest .
+
+      - name: Tag docker image
+        run: docker tag demododev/dockerghtest:latest demododev/dockerghtest-${{ github.sha }}:latest
+
+      - name: Push docker image
+        run: docker push demododev/dockerghtest-${{ github.sha }}:latest
